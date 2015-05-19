@@ -4,9 +4,6 @@ using System.Collections.Generic;
 
 public class BonusInteractionManager: MonoBehaviour {
 
-
-
-	private int m_phase;
 	private Vector3 initialVector;
 	private Vector3 currentVector;
 	private Vector3 maxVector;
@@ -14,22 +11,21 @@ public class BonusInteractionManager: MonoBehaviour {
 	public GameObject m_nextBonus1;
 	public GameObject m_nextBonus2;
 	public GameObject m_otherBonus;
+	public Color m_interactingColor;
+	public Color m_idleColor;
+
 
 	[Range(0.0f,Mathf.PI/4)]
 	public float m_epsilon ;
 
 	// Use this for initialization
 	void Start () {
-		m_phase = 0;
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-	}
-
-	public void UpdatePhase(int newPhase){
-		m_phase = newPhase;
 	}
 
 	void FixedUpdate(){
@@ -120,22 +116,25 @@ public class BonusInteractionManager: MonoBehaviour {
 			}
 
 		}
-		
-
-			
-
 	}
+
 	void ActionAfterCircled(){
+
 		if (m_otherBonus != null) {
+			JIAO.JIAO.JIAOMainController.m_maincontroller.m_state ++;
+			JIAO.JIAO.JIAOMainController.m_maincontroller.OnGenerateEnemies();
 			m_nextBonus1.SetActive (true);
 			if (m_nextBonus2 != null) {
 				m_nextBonus2.SetActive (true);
 			}
 			Destroy (m_otherBonus);
 			Destroy (gameObject);
+
 		} 
 		else {
-			// Anim de fin
+			Debug.Log("end");
+			Application.LoadLevel("EndScene");
+			Destroy (gameObject);
 		}
 	}
 
@@ -143,7 +142,7 @@ public class BonusInteractionManager: MonoBehaviour {
 
 		if (col.gameObject.tag == "Avatar") {
 			Debug.Log("In");
-			gameObject.GetComponent<Renderer>().material.SetColor("_Color", new Color(0,255,0,0.15f));
+			gameObject.GetComponent<Renderer>().material.SetColor("_Color", m_interactingColor);
 			initialVector = new Vector3(col.transform.position.x -transform.position.x, 0 , col.transform.position.z - transform.position.z);
 			initialVector.Normalize();
 			currentVector = initialVector;
@@ -163,7 +162,7 @@ public class BonusInteractionManager: MonoBehaviour {
 
 		if (col.gameObject.tag == "Avatar") {
 			Debug.Log("Out");
-			gameObject.GetComponent<Renderer>().material.SetColor("_Color", new Color(255,0,0,0.15f));
+			gameObject.GetComponent<Renderer>().material.SetColor("_Color", m_idleColor);
 			initialVector =Vector3.zero;
 			currentVector = Vector3.zero;
 			maxVector = Vector3.zero	;

@@ -24,6 +24,11 @@
 		public GameObject m_mainCamera;
 		public Vector3 m_mainCamPositionVector;
 		public Vector3 m_direction = new Vector3 ();
+
+		public float m_posXMax;
+		public float m_posXMin;
+		public float m_posYMax;
+		public float m_posYMin;
 		
 		void Start ()
 		{
@@ -76,6 +81,26 @@
 				m_mainCamera.transform.position += m_speed_direction;
 			if((m_speed_direction.z < 0 && (m_screenPosition.y < (Screen.height*0.2f))) || (m_speed_direction.z > 0 && (m_screenPosition.y > (Screen.height*0.8f))))
 				m_mainCamera.transform.position += m_speed_direction;
+
+
+			if(transform.position.x > m_posXMax){
+				transform.position += new Vector3(- 2 * m_posXMax, 0f,0f);
+				m_mainCamera.transform.position += new Vector3(- 2 * m_posXMax, 0f,0f);
+			}
+			if(transform.position.x < m_posXMin){
+				transform.position += new Vector3(- 2 * m_posXMin, 0f,0f);
+				m_mainCamera.transform.position += new Vector3(- 2 * m_posXMin, 0f,0f);
+			}
+			
+			if(transform.position.z > m_posYMax){
+				transform.position += new Vector3(0f , 0f,- 2 * m_posYMax);
+				m_mainCamera.transform.position += new Vector3(0f , 0f,- 2 * m_posYMax);
+			}
+			
+			if(transform.position.z < m_posYMin){
+				transform.position += new Vector3(0f , 0f,- 2 * m_posYMin);
+				m_mainCamera.transform.position += new Vector3(0f , 0f,- 2 * m_posYMin);
+			}
 		}
 	}
 }

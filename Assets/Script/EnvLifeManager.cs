@@ -30,6 +30,7 @@ public class EnvLifeManager : MonoBehaviour {
 	}
 
 	public void KillEnv(){
+		transform.parent.GetComponent<PlacementManager>().RemoveObjectFromList(gameObject);
 		Destroy (gameObject);
 	}
 }

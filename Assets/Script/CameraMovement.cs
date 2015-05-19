@@ -17,8 +17,7 @@ public class CameraMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-/*		
- 		Vector2 PosFinger = Input.mousePosition;
+		Vector2 PosFinger = Input.mousePosition;
 		PosFinger.x /=Screen.width;
 		PosFinger.y /= Screen.height;
 		Vector2 posToCenter = new Vector2(-0.5f + PosFinger.x, -0.5f + PosFinger.y)*2;
@@ -38,7 +37,7 @@ public class CameraMovement : MonoBehaviour {
 		if(transform.position.z < m_posYMin){
 			transform.position += new Vector3(0f , 0f,- 2 * m_posYMin);
 		}
-*/
+
 
 	}
 }

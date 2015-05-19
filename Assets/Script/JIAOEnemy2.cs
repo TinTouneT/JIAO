@@ -40,7 +40,7 @@
 		
 		public void FixedUpdate ()
 		{
-			if ((transform.position - m_avatar.transform.position).magnitude <= m_distAvatar) {
+			if ((transform.position - m_avatar.transform.position).magnitude <= m_distAvatar && (m_startPoint-m_avatar.transform.position).magnitude < m_zoneRadius) {
 				ChangeState (EnnemiesStates.hunt);
 				NewPointHunt ();
 			} else {
@@ -222,6 +222,12 @@
 			}
 			
 			
+		}
+
+		public void Kill(){
+			transform.parent.GetComponent<PlacementManager>().RemoveObjectFromList(gameObject);
+			//Put AnimManager here
+			//
 		}
 		
 		

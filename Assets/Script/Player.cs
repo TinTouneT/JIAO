@@ -39,6 +39,41 @@
 
 		void FixedUpdate() {
 
+			m_screenPosition = m_maincam.WorldToScreenPoint(m_pos.position);
+			m_positionFromCenter.x = transform.position.x;
+			m_positionFromCenter.y = 0f;
+			m_positionFromCenter.z = transform.position.z-154f;
+			/*m_sonarTargetVector.x = m_sonarTarget.transform.position.x;
+			if(m_sonarTargetVector.x - transform.position.x > 2000f)
+				m_sonarTargetVector.x = -m_sonarTargetVector.x;
+			if(m_sonarTargetVector.z - transform.position.z > 2000f)
+				m_sonarTargetVector.z = -m_sonarTargetVector.z;
+			m_sonarTargetVector.y = 0f;
+			m_sonarTargetVector.z = m_sonarTarget.transform.position.z;
+			sonar.transform.LookAt(m_sonarTargetVector);*/
+
+		
+			if (inputIn ) {
+				float distx =  Mathf.Abs (m_pos.position.x) /(m_orthographicSize);
+				transform.forward = m_inputController.m_direction.normalized;
+				if(Vector3.Dot(m_positionFromCenter,transform.forward) > 0 && distx > 0.6f)
+					m_speed_direction.x = (m_inputController.m_direction.x ) * m_speed * (1f-distx);
+				else
+					m_speed_direction.x = (m_inputController.m_direction.x ) * m_speed;
+
+				float disty = Mathf.Abs (m_positionFromCenter.z)/(m_orthographicSize/m_aspect);
+				 if(Vector3.Dot(m_positionFromCenter,transform.forward) > 0 && disty > 1.0f)
+					m_speed_direction.z = (m_inputController.m_direction.z ) * m_speed * (1.0f-disty);
+				else
+					m_speed_direction.z = (m_inputController.m_direction.z ) * m_speed;
+				m_pos.position += m_speed_direction;
+
+
+			}
+			else {
+				if((m_center - transform.position).magnitude >0.9f)
+					m_pos.position += m_levelController.m_p_lerpTargetVector * m_levelController.lerp;
+			}
 
 		}
     }
